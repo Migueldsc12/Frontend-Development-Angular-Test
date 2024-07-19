@@ -22,6 +22,11 @@ const routes: Routes = [
     loadChildren: () =>
       import('./product-editor/product-editor.module').then((m) => m.ProductEditorModule),
   },
+  {
+    path: 'product-details',
+    loadChildren: () =>
+      import('./product-details/product-details.module').then((m) => m.ProductDetailsModule),
+  },
 
   //Otherwise redirect to login
   { path: '**', redirectTo: 'login' }

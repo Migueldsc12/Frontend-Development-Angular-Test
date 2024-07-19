@@ -2,6 +2,9 @@ import { Component, OnInit } from '@angular/core';
 import { Router } from '@angular/router';
 import { ProductService } from '../product.service';
 import { MatTableDataSource } from '@angular/material/table';
+import { MatDialog } from '@angular/material/dialog';
+import { ProductEditorComponent } from '../product-editor/product-editor.component';
+import { ProductDetailsComponent } from '../product-details/product-details.component';
 
 @Component({
   selector: 'app-product-list',
@@ -13,7 +16,11 @@ export class ProductListComponent implements OnInit {
   displayedColumns = ['index', 'sku', 'name', 'cost', 'actions'];
   dataSource = new MatTableDataSource(this.products);
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private dialog: MatDialog
+  ) {}
 
   ngOnInit(): void {
     const authKey = localStorage.getItem('authKey');
@@ -39,7 +46,7 @@ export class ProductListComponent implements OnInit {
       if (authKey) {
         this.productService.deleteProduct(id, authKey).subscribe(() => {
           this.products = this.products.filter((product) => product.id !== id);
-          this.dataSource.data = this.products; // Actualiza la fuente de datos
+          this.dataSource.data = this.products;
         });
       }
     }
