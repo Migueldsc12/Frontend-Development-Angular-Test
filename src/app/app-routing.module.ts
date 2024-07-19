@@ -18,7 +18,7 @@ const routes: Routes = [
       import('./product-editor/product-editor.module').then((m) => m.ProductEditorModule),
   },
   {
-    path: 'product-editor',
+    path: 'product-editor/:id',
     loadChildren: () =>
       import('./product-editor/product-editor.module').then((m) => m.ProductEditorModule),
   },

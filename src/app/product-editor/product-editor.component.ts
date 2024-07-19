@@ -1,5 +1,5 @@
-import { Component } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ProductService } from '../product.service';
 
 @Component({
@@ -7,10 +7,35 @@ import { ProductService } from '../product.service';
   templateUrl: './product-editor.component.html',
   styleUrls: ['./product-editor.component.css']
 })
-export class ProductEditorComponent {
-  customProperties = [{ key: '', value: '' }];
+export class ProductEditorComponent implements OnInit {
+  product: any = {};
+  customProperties = [{ key: '', value: '' }]; // Inicializa con al menos un par clave-valor
 
-  constructor(private productService: ProductService, private router: Router) {}
+  constructor(
+    private productService: ProductService,
+    private router: Router,
+    private route: ActivatedRoute
+  ) {}
+
+  ngOnInit(): void {
+    const id = this.route.snapshot.paramMap.get('id');
+    const authKey = localStorage.getItem('authKey');
+    if (id && authKey) {
+      this.productService.getProducts(authKey).subscribe(data => {
+        const product = data.find((p: any) => p.id === +id);
+        if (product) {
+          this.product = product;
+          // Si hay propiedades personalizadas, mapéalas
+          if (this.product.profile) {
+            this.customProperties = Object.keys(this.product.profile).map(key => ({
+              key: key,
+              value: this.product.profile[key]
+            }));
+          }
+        }
+      });
+    }
+  }
 
   onSubmit(form: any) {
     const profile: { [key: string]: string } = {};
@@ -28,12 +53,23 @@ export class ProductEditorComponent {
 
     const authKey = localStorage.getItem('authKey');
     if (authKey) {
-      this.productService.createProduct(product, authKey).subscribe(response => {
-        console.log('Product saved:', response);
-        this.router.navigate(['/products']);
-      }, error => {
-        console.error('Error saving product:', error);
-      });
+      if (this.product.id) {
+        // Edit Product
+        this.productService.updateProduct(this.product.id, product, authKey).subscribe(response => {
+          console.log('Product updated:', response);
+          this.router.navigate(['/products']);
+        }, error => {
+          console.error('Error updating product:', error);
+        });
+      } else {
+        // Create new Product
+        this.productService.createProduct(product, authKey).subscribe(response => {
+          console.log('Product created:', response);
+          this.router.navigate(['/products']);
+        }, error => {
+          console.error('Error creating product:', error);
+        });
+      }
     } else {
       console.error('No auth key found.');
     }
