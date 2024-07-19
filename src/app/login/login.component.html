@@ -1,6 +1,8 @@
 <div class="login-container">
+  
   <h2>Login</h2>
   <form (ngSubmit)="onSubmit()" class="login-form" [formGroup]="form">
+  
     <div class="form-group">
       <label for="authKey">Authorization Key:</label>
       <input
@@ -11,6 +13,7 @@
         formControlName="authKey"
       />
     </div>
+  
     <button type="submit" class="btn">Login</button>
   </form>
 </div>

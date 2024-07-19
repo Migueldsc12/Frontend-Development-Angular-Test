@@ -25,7 +25,7 @@ export class ProductEditorComponent implements OnInit {
         const product = data.find((p: any) => p.id === +id);
         if (product) {
           this.product = product;
-          // Si hay propiedades personalizadas, mapéalas
+          // map propierties
           if (this.product.profile) {
             this.customProperties = Object.keys(this.product.profile).map(key => ({
               key: key,

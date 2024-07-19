@@ -32,14 +32,29 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  /**
+   * viewDetails
+   * 
+   * redirect to a details page for products
+   */
   viewDetails(product: any) {
     this.router.navigate(['/product-details', product.id]);
   }
 
+  /**
+   * editProduct
+   * 
+   * redirect to a editor page for products
+   */
   editProduct(product: any) {
     this.router.navigate(['/product-editor', product.id]);
   }
 
+  /**
+   * confirmDelete
+   * 
+   * warning before delete a product
+   */
   confirmDelete(id: number) {
     if (confirm('Are you sure you want to delete this product?')) {
       const authKey = localStorage.getItem('authKey');
@@ -52,6 +67,11 @@ export class ProductListComponent implements OnInit {
     }
   }
 
+  /**
+   * createProduct
+   * 
+   * redirect to a creating page for products
+   */
   createProduct() {
     this.router.navigate(['/product-editor']);
   }
