@@ -20,7 +20,7 @@
   
     <mat-form-field appearance="fill" class="form-group">
       <mat-label>Cost</mat-label>
-      <input matInput type="number" id="cost" name="cost" required [(ngModel)]="product.cost" />
+      <input matInput type="number" step="0.01" id="cost" name="cost" required [(ngModel)]="product.cost" />
     </mat-form-field>
   
     <div class="form-group">

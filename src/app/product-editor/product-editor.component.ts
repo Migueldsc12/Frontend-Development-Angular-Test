@@ -50,6 +50,14 @@ export class ProductEditorComponent implements OnInit {
       profile: profile
     };
 
+    const createProduct = {
+      name: form.value.name,
+      description: form.value.description,
+      sku: form.value.sku,
+      cost: form.value.cost,
+      profile: profile
+    };
+
     const authKey = localStorage.getItem('authKey');
     if (authKey) {
       const id = this.route.snapshot.paramMap.get('id');
@@ -63,7 +71,7 @@ export class ProductEditorComponent implements OnInit {
         });
       } else {
         // Create new Product
-        this.productService.createProduct(product, authKey).subscribe(response => {
+        this.productService.createProduct(createProduct, authKey).subscribe(response => {
           console.log('Product created:', response);
           this.router.navigate(['/products']);
         }, error => {
