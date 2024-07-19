@@ -46,14 +46,14 @@ export class ProductEditorComponent implements OnInit {
     const product = {
       name: form.value.name,
       description: form.value.description,
-      sku: form.value.sku,
       cost: form.value.cost,
       profile: profile
     };
 
     const authKey = localStorage.getItem('authKey');
     if (authKey) {
-      if (this.product.id) {
+      const id = this.route.snapshot.paramMap.get('id');
+      if (id) {
         // Edit Product
         this.productService.updateProduct(this.product.id, product, authKey).subscribe(response => {
           console.log('Product updated:', response);
