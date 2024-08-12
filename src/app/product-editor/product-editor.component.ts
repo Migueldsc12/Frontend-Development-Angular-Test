@@ -11,6 +11,7 @@ export class ProductEditorComponent implements OnInit {
   product: any = {};
   customProperties = [{ key: '', value: '' }]; // Inicializa con al menos un par clave-valor
 
+
   constructor(
     private productService: ProductService,
     private router: Router,
@@ -47,7 +48,7 @@ export class ProductEditorComponent implements OnInit {
       name: form.value.name,
       description: form.value.description,
       cost: form.value.cost,
-      profile: profile
+      profile: {... profile, backlog: this.product.backlog},
     };
 
     const createProduct = {

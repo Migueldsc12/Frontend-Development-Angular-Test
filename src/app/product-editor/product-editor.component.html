@@ -23,30 +23,33 @@
       <input matInput type="number" step="0.01" id="cost" name="cost" required [(ngModel)]="product.cost" />
     </mat-form-field>
   
-    <div class="form-group">
-      <mat-checkbox id="available" name="available" [(ngModel)]="product.available">
-        Available
-      </mat-checkbox>
+    <div class="form-group" >
+        <mat-checkbox id="available" name="available" [(ngModel)]="product.available">
+          Available
+        </mat-checkbox>
+
     </div>
   
-    <mat-form-field appearance="fill" class="form-group">
-      <mat-label>Backlog</mat-label>
-      <input matInput type="number" id="backlog" name="backlog" [(ngModel)]="product.backlog" />
-    </mat-form-field>
+      <mat-form-field appearance="fill" class="form-group">
+          <mat-label>Backlog</mat-label>
+          <input matInput type="number" id="backlog" name="backlog" [(ngModel)]="product.backlogs" />
+      </mat-form-field>
   
     <div class="custom-properties">
       <label>Custom Properties:</label>
   
       <div *ngFor="let prop of customProperties; let i = index" class="form-group">
-        <mat-form-field appearance="fill" class="form-field-custom">
-          <mat-label>Key</mat-label>
-          <input matInput type="text" name="key-{{i}}" readonly [(ngModel)]="prop.key" />
-        </mat-form-field>
-  
-        <mat-form-field appearance="fill" class="form-field-custom">
-          <mat-label>Value</mat-label>
-          <input matInput type="text" name="value-{{i}}" [(ngModel)]="prop.value" />
-        </mat-form-field>
+        <div *ngIf="prop.key != 'backlog'">
+          <mat-form-field appearance="fill" class="form-field-custom">
+            <mat-label>Key</mat-label>
+            <input matInput type="text" name="key-{{i}}" [(ngModel)]="prop.key" />
+          </mat-form-field>
+    
+          <mat-form-field appearance="fill" class="form-field-custom">
+            <mat-label>Value</mat-label>
+            <input matInput type="text" name="value-{{i}}" [(ngModel)]="prop.value" />
+          </mat-form-field>
+        </div>
   
         <button mat-icon-button color="warn" type="button" (click)="removeProperty(i)">
           <mat-icon>delete</mat-icon>
